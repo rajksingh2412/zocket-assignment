@@ -6,12 +6,13 @@ A containerized FastAPI service deployed on AWS EC2 using Terraform. It includes
 
 ## 🏗 Architecture Diagram
 
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](in form of flowchart)
 
 ---
 
 ## 📦 Project Structure
 
+```bash
 .
 ├── app/
 │ ├── main.py
@@ -26,7 +27,7 @@ A containerized FastAPI service deployed on AWS EC2 using Terraform. It includes
 ├── Dockerfile
 ├── architecture.png
 └── README.md
-
+```
 ---
 
 ## ⚙️ Setup Instructions
@@ -50,6 +51,7 @@ terraform init
 terraform apply \
   -var="key_name=<your-ec2-key-name>" \
   -var="bucket_name=<your-unique-bucket-name>"
+```  
 This will:
 1. Create an EC2 instance (Ubuntu 22.04)
 2. Open ports 80 (app) and 9100 (metrics)
@@ -57,7 +59,9 @@ This will:
 4. Install Docker, deploy your container, and start Prometheus Node Exporter
 5. After deployment, note the EC2 public IP from Terraform output.
 
+
 3️⃣  CI/CD with GitHub Actions
+
 ➕ Secrets to Add in GitHub:
 Name	Description
 DOCKER_USERNAME	Docker Hub username
@@ -75,23 +79,26 @@ SSH into EC2 and redeploys the container
 
 4️⃣ API Usage
 ➕ Create Task
-bash
-Copy code
+```bash
 curl -X POST http://<EC2_PUBLIC_IP>/tasks \
 -H "Content-Type: application/json" \
 -d '{"title":"Deploy", "description":"Via CI/CD"}'
+```
+
 📋 List Tasks
-bash
-Copy code
+```bash
 curl http://<EC2_PUBLIC_IP>/tasks
+```
+
 📈 App Metrics
-bash
-Copy code
+```bash
 curl http://<EC2_PUBLIC_IP>/metrics
+```
+
 📊 Node Exporter Metrics (System)
-bash
-Copy code
+``` bash
 curl http://<EC2_PUBLIC_IP>:9100/metrics
+```
 
 🛡 Monitoring
 App Metrics: via prometheus_client at /metrics
